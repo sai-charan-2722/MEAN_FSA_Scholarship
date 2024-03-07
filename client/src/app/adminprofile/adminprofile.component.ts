@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Application } from '../models/application';
-import { UserService } from '../services/user.service';
+import { ApplicationService } from '../services/application.service';
 
 @Component({
   selector: 'app-adminprofile',
@@ -9,14 +9,14 @@ import { UserService } from '../services/user.service';
   styleUrl: './adminprofile.component.css'
 })
 export class AdminprofileComponent implements OnInit {
-    userService = inject(UserService)
+    applicationService = inject(ApplicationService)
     applications:any;
     status:boolean = true;
     approveStatus:string;
 
 
     ngOnInit():void{
-      this.userService.getAllApplications().subscribe({
+      this.applicationService.getAllApplications().subscribe({
         next:(res)=>{
             this.applications = res.payload;
         },
@@ -31,7 +31,7 @@ export class AdminprofileComponent implements OnInit {
         console.log("approve",id)
         console.log("app",app)
         app['status']="Approved";
-        this.userService.updateApplication(id,app).subscribe(
+        this.applicationService.updateApplication(id,app).subscribe(
           (res)=>{console.log(res)},
           (err)=>{
             console.log(err)
@@ -41,10 +41,10 @@ export class AdminprofileComponent implements OnInit {
 
     onReject(id:string){
       this.applications = this.applications.filter((app)=>{
-        app._id !== id;
+        app._id === id;
       });
       console.log(this.applications)
-      this.userService.deleteApplication(id).subscribe((res)=>console.log(res),(err)=>{console.log(err)});
+      this.applicationService.deleteApplication(id).subscribe((res)=>console.log(res),(err)=>{console.log(err)});
     }
     
 

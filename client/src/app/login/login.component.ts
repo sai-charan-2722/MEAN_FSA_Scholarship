@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { AdminService } from '../services/admin.service';
 
  
 @Component({
@@ -12,6 +13,7 @@ import { UserService } from '../services/user.service';
 export class LoginComponent {
   fb: FormBuilder = inject(FormBuilder);
   userService = inject(UserService)
+  adminService = inject(AdminService)
   router = inject(Router)
  
   userCredentialsError={
@@ -60,7 +62,7 @@ userCredentials:FormGroup
    }
  
    else{
-    this.userService.userAdminLogin(this.userCredentials.value).subscribe(
+    this.adminService.userAdminLogin(this.userCredentials.value).subscribe(
       (res) => {
         console.log("admin login",res)
         if (res.message === 'login success') {

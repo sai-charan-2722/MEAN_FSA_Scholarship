@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Application } from '../models/application';
-import { UserService } from '../services/user.service';
+import { ApplicationService } from '../services/application.service';
 
 @Component({
   selector: 'app-userprofile',
@@ -11,7 +11,7 @@ import { UserService } from '../services/user.service';
 })
 export class UserprofileComponent {
   fb:FormBuilder=inject(FormBuilder);
-  userService=inject(UserService)
+  applicationService=inject(ApplicationService)
   router=inject(Router)
    
   application=this.fb.group({
@@ -20,9 +20,9 @@ export class UserprofileComponent {
     mname:[''],
     father:['',Validators.required],
     mother:['',Validators.required],
-    email:['',Validators.required],
+    email:['',Validators.required,Validators.email],
     dob:['',Validators.required],
-    mblno:['',Validators.required],
+    mblno:['',Validators.required,Validators.pattern(/^[6-9]{1}[0-9]{9}$/)],
     gender:['',Validators.required],
     collegename:['',Validators.required],
     year:['',Validators.required],
@@ -92,7 +92,7 @@ export class UserprofileComponent {
   applicationsList:any
 
   getAllApplications(){
-    this.userService.getAllApplications().subscribe((res)=>{
+    this.applicationService.getAllApplications().subscribe((res)=>{
       this.applicationsList = res.payload;
       this.currentApplication = this.applicationsList[this.applicationsList.length-1];
       console.log(this.currentApplication)
@@ -102,7 +102,6 @@ export class UserprofileComponent {
 
   status:string;
   checkStatus:string;
-  //bool:boolean;
   
   changeStatus(){
     this.status= `Your application is submitted successfully! And your application no. is ${this.currentApplication._id}`
@@ -115,7 +114,7 @@ export class UserprofileComponent {
   onSubmitApplication(){
     let {fname,mname,lname,father,mother,email,dob,mblno,gender,collegename,year,grade,caste,annualincome}=this.application.value;
     let newApplication=new Application(fname,mname,lname,father,mother,email,dob,mblno,gender,collegename,year,grade,caste,annualincome);
-    this.userService.createApplication(newApplication).subscribe({
+    this.applicationService.createApplication(newApplication).subscribe({
       next:(res)=>{
         if(this.application.status==="VALID"){
           this.getAllApplications();

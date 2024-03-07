@@ -60,6 +60,7 @@
               <!-- validation msg for email -->
               <div *ngIf="email.invalid && (email.dirty || email.touched || ref.submitted)" class="text-danger">
                 <p *ngIf="email?.errors?.['required']">Email ID is required</p>
+                <p *ngIf="email?.errors?.['email']">Enter Valid Email</p>
               </div>
             </div>
             <!-- dob -->
@@ -80,6 +81,7 @@
               <!-- validation msg for mblno -->
               <div *ngIf="mblno.invalid && (mblno.dirty || mblno.touched || ref.submitted )" class="text-danger">
                 <p *ngIf="mblno ?.errors?.['required']">Mobile Number is required</p>
+                <p *ngIf="mblno ?.errors?.['pattern']">Enter Valid Number</p>
               </div>
             </div>
             <div class="mx-2">

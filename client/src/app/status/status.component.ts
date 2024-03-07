@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../services/user.service';
+import { ApplicationService } from '../services/application.service';
 
 @Component({
   selector: 'app-status',
@@ -9,7 +9,7 @@ import { UserService } from '../services/user.service';
 })
 export class StatusComponent {
   fb = inject(FormBuilder)
-  userService = inject(UserService)
+  applicationService = inject(ApplicationService)
 
   status = this.fb.group({
     appnum: ['', Validators.required]
@@ -22,7 +22,7 @@ export class StatusComponent {
 
   appStatus: string;
   onSearch() {
-    this.userService.getAllApplications().subscribe((appList) => {
+    this.applicationService.getAllApplications().subscribe((appList) => {
 
       console.log(appList)
       if(appList.length==0){
