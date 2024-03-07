@@ -1,0 +1,151 @@
+<h3 class="text-center" style="color: blue;">Scholarship registration form</h3>
+
+<h4 class="text-center">Already registered? Check your status <a routerLink="/status">Click here!</a></h4>
+<h2 class="text-info text-center">New registration:</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 mt-2 mx-auto">
+      <div class="bg-light mx-auto">
+        <form class="w-75 mx-auto mt-2" [formGroup]="application" #ref="ngForm" (ngSubmit)="onSubmitApplication()">
+          <div class="merge">
+            <div class="mx-2">
+              <label for="fname" class="form-label">First Name:</label>
+              <input type="text" formControlName="fname" id="fname" class="form-control">
+              <!-- validation error message for fname -->
+              <div *ngIf="fname.invalid && (fname.dirty || fname.touched || ref.submitted )" class="text-danger">
+                <p *ngIf="fname?.errors?.['required']">First name is required</p>
+                <p *ngIf="fname?.errors?.['minlength']">Min length is 4</p>
+                <p *ngIf="fname?.errors?.['maxlength']">Max length is 20</p>
+              </div>
+            </div>
+            <div class="mx-2">
+              <label for="mname" class="form-label">Middle Name:</label>
+              <input type="text" formControlName="mname" id="mname" class="form-control">
+            </div>
+            <div class="mx-2">
+              <label for="lname" class="form-label">Last name:</label>
+              <input type="text" formControlName="lname" id="lname" class="form-control">
+              <!-- validation msg for lname -->
+              <div *ngIf="lname.invalid && (lname.dirty || lname.touched || ref.submitted)" class="text-danger">
+                <p *ngIf="lname?.errors?.['required']">Last name is required</p>
+                <p *ngIf="lname?.errors?.['minlength']">Min length is 4</p>
+                <p *ngIf="lname?.errors?.['maxlength']">Max length is 20</p>
+              </div>
+            </div>
+          </div>
+          <div class="merge">
+            <div class="mx-2">
+              <label for="father" class="form-label">Father Name:</label>
+              <input type="text" formControlName="father" id="father" class="form-control">
+              <!-- validation msg for email -->
+              <div *ngIf="father.invalid && (father.dirty || father.touched || ref.submitted)" class="text-danger">
+                <p *ngIf="father?.errors?.['required']">father name is required</p>
+              </div>
+            </div>
+            <!-- dob -->
+            <div class="mx-2">
+              <label for="mother" class="form-label">Mother Name:</label>
+              <input type="text" formControlName="mother" id="mother" class="form-control">
+              <!-- validation msg for dob -->
+              <div *ngIf="mother.invalid && (mother.dirty || mother.touched || ref.submitted )" class="text-danger">
+                <p *ngIf="mother ?.errors?.['required']">Mother name is required</p>
+              </div>
+            </div>
+          </div>
+          <!-- email -->
+          <div class="merge">
+            <div class="mx-2">
+              <label for="email" class="form-label">Email ID:</label>
+              <input type="email" formControlName="email" id="email" class="form-control">
+              <!-- validation msg for email -->
+              <div *ngIf="email.invalid && (email.dirty || email.touched || ref.submitted)" class="text-danger">
+                <p *ngIf="email?.errors?.['required']">Email ID is required</p>
+              </div>
+            </div>
+            <!-- dob -->
+            <div class="mx-2">
+              <label for="dob" class="form-label">Date of Birth:</label>
+              <input type="date" formControlName="dob" id="dob" class="form-control">
+              <!-- validation msg for dob -->
+              <div *ngIf="dob.invalid && (dob.dirty || dob.touched || ref.submitted )" class="text-danger">
+                <p *ngIf="dob ?.errors?.['required']">DOB is required</p>
+              </div>
+            </div>
+          </div>
+          <!-- mblno -->
+          <div class="merge">
+            <div class="mx-2">
+              <label for="mblno" class="form-label">Mobile Number:</label>
+              <input type="tel" formControlName="mblno" id="mblno" class="form-control">
+              <!-- validation msg for mblno -->
+              <div *ngIf="mblno.invalid && (mblno.dirty || mblno.touched || ref.submitted )" class="text-danger">
+                <p *ngIf="mblno ?.errors?.['required']">Mobile Number is required</p>
+              </div>
+            </div>
+            <div class="mx-2">
+              <label for="gender" class="form-label">Gender: </label>
+              <select formControlName="gender" id="gender" class="form-control">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Transgender">Transgender</option>
+              </select>
+              <!-- validation msg for gender -->
+              <div *ngIf="gender.invalid && (gender.dirty || gender.touched || ref.submitted)" class="text-danger">
+                <p *ngIf="gender?.errors?.['required']">Gender is required</p>
+              </div>
+            </div>
+            <div class="mx-2">
+              <label for="collegename" class="form-label">College Name:</label>
+              <input type="text" formControlName="collegename" id="collegename" class="form-control">
+              <!-- validation msg for mblno -->
+              <div *ngIf="collegename.invalid && (collegename.dirty || collegename.touched || ref.submitted )"
+                class="text-danger">
+                <p *ngIf="collegename ?.errors?.['required']">College Name is required</p>
+              </div>
+            </div>
+            <div class="mx-2">
+              <label for="year" class="form-label">Studying Year:</label>
+              <input type="text" formControlName="year" id="year" class="form-control">
+              <!-- validation msg for mblno -->
+              <div *ngIf="year.invalid && (year.dirty || year.touched || ref.submitted )" class="text-danger">
+                <p *ngIf="year ?.errors?.['required']">Studying Year is required</p>
+              </div>
+            </div>
+            <div class="mx-2">
+              <label for="grade" class="form-label">Enter Average grade:</label>
+              <input type="number" formControlName="grade" id="grade" class="form-control">
+              <!-- validation msg for mblno -->
+              <div *ngIf="grade.invalid && (grade.dirty || grade.touched || ref.submitted )" class="text-danger">
+                <p *ngIf="grade ?.errors?.['required']">Grade is required</p>
+              </div>
+            </div>
+            <div class="mx-2">
+              <label for="caste" class="form-label">Caste: </label>
+              <select formControlName="caste" id="caste" class="form-control">
+                <option value="OC">OC</option>
+                <option value="BC">BC</option>
+                <option value="Minority">Minority</option>
+              </select>
+              <!-- validation msg for gender -->
+              <div *ngIf="caste.invalid && (caste.dirty || caste.touched || ref.submitted)" class="text-danger">
+                <p *ngIf="caste?.errors?.['required']">Caste is required</p>
+              </div>
+            </div>
+            <div class="mx-2">
+              <label for="annualincome" class="form-label">Annual Income:</label>
+              <input type="text" formControlName="annualincome" id="annualincome" class="form-control">
+              <!-- validation msg for mblno -->
+              <div *ngIf="annualincome.invalid && (annualincome.dirty || annualincome.touched || ref.submitted )"
+                class="text-danger">
+                <p *ngIf="annualincome ?.errors?.['required']">Annual Income is required</p>
+              </div>
+            </div>
+          </div>
+          <!-- submit button-->
+          <button class="btn btn-outline-primary d-block mx-auto mt-3 mb-2">Apply</button>
+        </form>
+        <h5 class="text-success text-center">{{status}}</h5>
+      </div>
+    </div>
+  </div>
+</div>

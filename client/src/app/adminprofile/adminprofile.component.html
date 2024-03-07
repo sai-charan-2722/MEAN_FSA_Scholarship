@@ -1,0 +1,23 @@
+<h3 class="text-center" style="color: blue;">Pending Applications</h3>
+<div class="merge mx-auto container">
+    <div class="row row-cols-sm-2 row-cols-md-3 g-4">
+        <div class="card mx-4" style="width: 20rem;" *ngFor="let app of applications">
+            <div class="card-body">
+                <h5 class="card-title">Application Number : {{app._id}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-dark">Name : {{app.fname}} {{app.mname}} {{app.lname}}</h6>
+                <p class="card-text">College name : {{app.collegename}}</p>
+                <p class="card-text">Studying year : {{app.year}}</p>
+                <p class="card-text">Caste : {{app.caste}}</p>
+                <p class="card-text">Annual Income : {{app.annualincome}}</p>
+                @if (status) {
+                    <div>
+                        <button class="btn btn-outline-success mx-3" (click)="onApprove(app._id,app)">Approve</button>
+                        <button class="btn btn-outline-danger mx-3" (click)="onReject(app._id)">Reject</button>
+                    </div>
+                }@else {
+                    <h5>{{approveStatus}}</h5>
+                } 
+            </div>
+        </div>
+    </div>
+</div>

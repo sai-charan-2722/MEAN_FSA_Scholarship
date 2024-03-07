@@ -1,0 +1,15 @@
+<h2 class="text-primary text-center">Get your Scholarship Application Status</h2>
+<div class="bg-light mx-auto" style="width: 50rem; margin-top: 20vh;">
+    <form class="w-75 mx-auto" [formGroup]="status" #ref="ngForm" (ngSubmit)="onSearch()">
+        <div class="mx-2">
+            <label for="appnum" class="form-label">Enter Application Number:</label>
+            <input type="text" formControlName="appnum" id="appnum" class="form-control">
+            <!-- validation msg for id -->
+            <div *ngIf="appnum.invalid && (appnum.dirty || appnum.touched || ref.submitted)" class="text-danger">
+                <p *ngIf="appnum?.errors?.['required']">Application number is required</p>
+            </div>
+        </div>
+        <button class="btn btn-outline-primary d-block mx-auto mt-2 mb-4">Search</button>
+    </form>
+    <h3 class="bg-light text-center text-info mb-2">{{appStatus}}</h3>
+</div>

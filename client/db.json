@@ -1,0 +1,28 @@
+{
+  "students": [
+    {
+      "id": "50cf",
+      "username": "saicharan",
+      "password": "cherry",
+      "email": "sai@gmail.com",
+      "dob": "2024-01-02"
+    },
+    {
+      "id": "3190",
+      "username": "saicherry",
+      "password": "saicherry",
+      "email": "sai@mail.com",
+      "dob": "2024-03-05"
+    }
+  ],
+  "admins": [
+    {
+      "id": "4fa3",
+      "username": "charan",
+      "password": "cherry",
+      "email": "charan@gmail.com",
+      "dob": "2024-01-17"
+    }
+  ],
+  "applications": []
+}

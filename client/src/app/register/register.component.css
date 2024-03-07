@@ -1,0 +1,9 @@
+.merge{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.round{
+    border-radius: 15px;
+}
