@@ -1,4 +1,6 @@
 const Application = require("../Models/application");
+const {cloudinary} = require("../Middlewares/cloudinaryUpload")
+const fs = require("fs")
 
 const getAllApplications = async (req,res)=>{
     const applications = await Application.find();
@@ -12,7 +14,23 @@ const getApplicationById = async (req,res)=>{
 }
 
 const createApplication = async (req,res)=>{
-    const newApp = await Application.create(req.body);
+    let app = JSON.parse(req.body.newApplication)
+    
+    let existingApp = await Application.findOne({email:app.email});
+    if(existingApp !==null){
+        return res.status(200).send({message:"Application already existed"})
+    }
+    let result = await cloudinary.uploader.upload(req.file.path)
+    app.imageUrl = result.url;
+    app.status = "Pending";
+
+    const newApp = await Application.create(app);
+
+    fs.unlink(req.file.path,err=>{
+        if(err){
+            throw err
+        }
+    });
     res.status(200).send({ message: "Application created", payload: newApp });
 }
 

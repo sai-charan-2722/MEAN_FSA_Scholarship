@@ -2,19 +2,20 @@
 
 <h4 class="text-center">Already registered? Check your status <a routerLink="/status">Click here!</a></h4>
 <h2 class="text-info text-center">New registration:</h2>
+<h2 *ngIf="alreadyExisted" class="text-danger text-center">{{alreadyExistedMsg}}</h2>
 <div class="container">
   <div class="row">
     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 mt-2 mx-auto">
-      <div class="bg-light mx-auto">
+      <div class="bg-light mx-auto mb-4">
         <form class="w-75 mx-auto mt-2" [formGroup]="application" #ref="ngForm" (ngSubmit)="onSubmitApplication()">
           <div class="merge">
             <div class="mx-2">
               <label for="fname" class="form-label">First Name:</label>
               <input type="text" formControlName="fname" id="fname" class="form-control">
               <!-- validation error message for fname -->
-              <div *ngIf="fname.invalid && (fname.dirty || fname.touched || ref.submitted )" class="text-danger">
+              <div *ngIf="fname?.invalid && (fname?.dirty || fname?.touched || ref.submitted )" class="text-danger">
                 <p *ngIf="fname?.errors?.['required']">First name is required</p>
-                <p *ngIf="fname?.errors?.['minlength']">Min length is 4</p>
+                <p *ngIf="fname?.errors?.['minlength']">Min length is 3</p>
                 <p *ngIf="fname?.errors?.['maxlength']">Max length is 20</p>
               </div>
             </div>
@@ -26,9 +27,9 @@
               <label for="lname" class="form-label">Last name:</label>
               <input type="text" formControlName="lname" id="lname" class="form-control">
               <!-- validation msg for lname -->
-              <div *ngIf="lname.invalid && (lname.dirty || lname.touched || ref.submitted)" class="text-danger">
+              <div *ngIf="lname?.invalid && (lname?.dirty || lname?.touched || ref.submitted)" class="text-danger">
                 <p *ngIf="lname?.errors?.['required']">Last name is required</p>
-                <p *ngIf="lname?.errors?.['minlength']">Min length is 4</p>
+                <p *ngIf="lname?.errors?.['minlength']">Min length is 3</p>
                 <p *ngIf="lname?.errors?.['maxlength']">Max length is 20</p>
               </div>
             </div>
@@ -38,8 +39,8 @@
               <label for="father" class="form-label">Father Name:</label>
               <input type="text" formControlName="father" id="father" class="form-control">
               <!-- validation msg for email -->
-              <div *ngIf="father.invalid && (father.dirty || father.touched || ref.submitted)" class="text-danger">
-                <p *ngIf="father?.errors?.['required']">father name is required</p>
+              <div *ngIf="father?.invalid && (father?.dirty || father?.touched || ref.submitted)" class="text-danger">
+                <p *ngIf="father?.errors?.['required']">Father name is required</p>
               </div>
             </div>
             <!-- dob -->
@@ -47,7 +48,7 @@
               <label for="mother" class="form-label">Mother Name:</label>
               <input type="text" formControlName="mother" id="mother" class="form-control">
               <!-- validation msg for dob -->
-              <div *ngIf="mother.invalid && (mother.dirty || mother.touched || ref.submitted )" class="text-danger">
+              <div *ngIf="mother?.invalid && (mother?.dirty || mother?.touched || ref.submitted )" class="text-danger">
                 <p *ngIf="mother ?.errors?.['required']">Mother name is required</p>
               </div>
             </div>
@@ -58,7 +59,7 @@
               <label for="email" class="form-label">Email ID:</label>
               <input type="email" formControlName="email" id="email" class="form-control">
               <!-- validation msg for email -->
-              <div *ngIf="email.invalid && (email.dirty || email.touched || ref.submitted)" class="text-danger">
+              <div *ngIf="email?.invalid && (email?.dirty || email?.touched || ref.submitted)" class="text-danger">
                 <p *ngIf="email?.errors?.['required']">Email ID is required</p>
                 <p *ngIf="email?.errors?.['email']">Enter Valid Email</p>
               </div>
@@ -68,7 +69,7 @@
               <label for="dob" class="form-label">Date of Birth:</label>
               <input type="date" formControlName="dob" id="dob" class="form-control">
               <!-- validation msg for dob -->
-              <div *ngIf="dob.invalid && (dob.dirty || dob.touched || ref.submitted )" class="text-danger">
+              <div *ngIf="dob?.invalid && (dob?.dirty || dob?.touched || ref.submitted )" class="text-danger">
                 <p *ngIf="dob ?.errors?.['required']">DOB is required</p>
               </div>
             </div>
@@ -79,7 +80,7 @@
               <label for="mblno" class="form-label">Mobile Number:</label>
               <input type="tel" formControlName="mblno" id="mblno" class="form-control">
               <!-- validation msg for mblno -->
-              <div *ngIf="mblno.invalid && (mblno.dirty || mblno.touched || ref.submitted )" class="text-danger">
+              <div *ngIf="mblno?.invalid && (mblno?.dirty || mblno?.touched || ref.submitted )" class="text-danger">
                 <p *ngIf="mblno ?.errors?.['required']">Mobile Number is required</p>
                 <p *ngIf="mblno ?.errors?.['pattern']">Enter Valid Number</p>
               </div>
@@ -92,15 +93,22 @@
                 <option value="Transgender">Transgender</option>
               </select>
               <!-- validation msg for gender -->
-              <div *ngIf="gender.invalid && (gender.dirty || gender.touched || ref.submitted)" class="text-danger">
+              <div *ngIf="gender?.invalid && (gender?.dirty || gender?.touched || ref.submitted)" class="text-danger">
                 <p *ngIf="gender?.errors?.['required']">Gender is required</p>
               </div>
             </div>
             <div class="mx-2">
+              <label for="image" class="form-label">Pass-port size Photo:</label>
+              <input type="file" formControlName="image" id="image" class="form-control" name="image" placeholder="Select image" (input)="onChange(f.files[0])" #f>
+              <div *ngIf="image?.invalid && (image?.dirty || image?.touched || ref.submitted )" class="text-danger">
+                <p *ngIf="image ?.errors?.['required']">Pass-port size photo is required</p>
+              </div>
+            </div>  
+            <div class="mx-2">
               <label for="collegename" class="form-label">College Name:</label>
               <input type="text" formControlName="collegename" id="collegename" class="form-control">
               <!-- validation msg for mblno -->
-              <div *ngIf="collegename.invalid && (collegename.dirty || collegename.touched || ref.submitted )"
+              <div *ngIf="collegename?.invalid && (collegename?.dirty || collegename?.touched || ref.submitted )"
                 class="text-danger">
                 <p *ngIf="collegename ?.errors?.['required']">College Name is required</p>
               </div>
@@ -109,7 +117,7 @@
               <label for="year" class="form-label">Studying Year:</label>
               <input type="text" formControlName="year" id="year" class="form-control">
               <!-- validation msg for mblno -->
-              <div *ngIf="year.invalid && (year.dirty || year.touched || ref.submitted )" class="text-danger">
+              <div *ngIf="year?.invalid && (year?.dirty || year?.touched || ref.submitted )" class="text-danger">
                 <p *ngIf="year ?.errors?.['required']">Studying Year is required</p>
               </div>
             </div>
@@ -117,7 +125,7 @@
               <label for="grade" class="form-label">Enter Average grade:</label>
               <input type="number" formControlName="grade" id="grade" class="form-control">
               <!-- validation msg for mblno -->
-              <div *ngIf="grade.invalid && (grade.dirty || grade.touched || ref.submitted )" class="text-danger">
+              <div *ngIf="grade?.invalid && (grade?.dirty || grade?.touched || ref.submitted )" class="text-danger">
                 <p *ngIf="grade ?.errors?.['required']">Grade is required</p>
               </div>
             </div>
@@ -129,7 +137,7 @@
                 <option value="Minority">Minority</option>
               </select>
               <!-- validation msg for gender -->
-              <div *ngIf="caste.invalid && (caste.dirty || caste.touched || ref.submitted)" class="text-danger">
+              <div *ngIf="caste?.invalid && (caste?.dirty || caste?.touched || ref.submitted)" class="text-danger">
                 <p *ngIf="caste?.errors?.['required']">Caste is required</p>
               </div>
             </div>
@@ -137,7 +145,7 @@
               <label for="annualincome" class="form-label">Annual Income:</label>
               <input type="text" formControlName="annualincome" id="annualincome" class="form-control">
               <!-- validation msg for mblno -->
-              <div *ngIf="annualincome.invalid && (annualincome.dirty || annualincome.touched || ref.submitted )"
+              <div *ngIf="annualincome?.invalid && (annualincome?.dirty || annualincome?.touched || ref.submitted )"
                 class="text-danger">
                 <p *ngIf="annualincome ?.errors?.['required']">Annual Income is required</p>
               </div>

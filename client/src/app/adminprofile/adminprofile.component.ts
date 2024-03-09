@@ -10,9 +10,7 @@ import { ApplicationService } from '../services/application.service';
 })
 export class AdminprofileComponent implements OnInit {
     applicationService = inject(ApplicationService)
-    applications:any;
-    status:boolean = true;
-    approveStatus:string;
+    applications:any[];
 
 
     ngOnInit():void{
@@ -25,26 +23,32 @@ export class AdminprofileComponent implements OnInit {
     }
 
 
-    onApprove(id:string,app:Application){
-        this.status = false;
-        this.approveStatus = 'Application Approved'
-        console.log("approve",id)
-        console.log("app",app)
-        app['status']="Approved";
-        this.applicationService.updateApplication(id,app).subscribe(
-          (res)=>{console.log(res)},
-          (err)=>{
-            console.log(err)
-          }
-        )
+    onApprove(id:string,app:any){
+      app['status'] = "Approved";
+      this.applicationService.updateApplication(id,app).subscribe({
+        next:(res)=>{
+          console.log(res);
+        },
+        error:(err)=>{
+          console.log(err);
+        }
+      })
+
     }
 
     onReject(id:string){
-      this.applications = this.applications.filter((app)=>{
+      let index = this.applications.findIndex((app)=>{
         app._id === id;
       });
-      console.log(this.applications)
-      this.applicationService.deleteApplication(id).subscribe((res)=>console.log(res),(err)=>{console.log(err)});
+      this.applications.splice(index,1);
+      this.applicationService.deleteApplication(id).subscribe({
+        next:(res)=>{
+          console.log(res)
+        },
+        error:(err)=>{
+          console.log(err)
+        }
+      });
     }
     
 

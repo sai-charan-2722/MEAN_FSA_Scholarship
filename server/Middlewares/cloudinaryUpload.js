@@ -4,6 +4,13 @@ const cloudinaryStorage = require('cloudinary-multer')
 
 require('dotenv').config()
 
+const fs = require('fs');
+const path = require('path');
+
+if(!fs.existsSync("./uploads")){
+    fs.mkdirSync("./uploads");
+}
+
 cloudinary.config({
     cloud_name:process.env.CLOUD_NAME,
     api_key:process.env.API_KEY,
@@ -11,9 +18,18 @@ cloudinary.config({
 })
 
 const storage = cloudinaryStorage({
-    cloudinary: cloudinary,
+    cloudinary: cloudinary
 })
 
-const upload = multer({storage:storage})
+const localStorage = multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,"./uploads");
+    },
+    filename:function(req,file,cb){
+        cb(null,Date.now()+path.extname(file.originalname))
+    }
+});
+
+const upload = multer({storage:localStorage})
 
 module.exports={upload,cloudinary}

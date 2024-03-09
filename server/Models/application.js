@@ -10,11 +10,13 @@ const applicationSchema=new mongoose.Schema({
     dob:{type:String,required:true},
     mblno:{type:String,required:true},
     gender:{type:String,required:true},
+    imageUrl:{type:String,required:true},
     collegename:{type:String,required:true},
     year:{type:String,required:true},
     grade:{type:String,required:true},
     caste:{type:String,required:true},
-    annualincome:{type:String,required:true}
+    annualincome:{type:String,required:true},
+    status:{type:String}
 })
 
 //create Model(class) for the userSchema
