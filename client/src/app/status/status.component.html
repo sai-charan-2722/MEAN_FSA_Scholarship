@@ -1,11 +1,12 @@
 <h2 class="text-primary text-center">Get your Scholarship Application Status</h2>
-<div class="bg-light mx-auto" style="width: 50rem; margin-top: 20vh;">
+<h4 class="text-center text-dark">Didn't apply yet? Apply for new Scholarship <button class="btn btn-sm btn-primary" (click)="navigateBack()">Here!</button></h4>
+<div class="bg-light mx-auto" style="width: 50rem; margin-top: 10vh;">
     <form class="w-75 mx-auto" [formGroup]="status" #ref="ngForm" (ngSubmit)="onSearch()">
         <div class="mx-2">
             <label for="appnum" class="form-label">Enter Application Number:</label>
             <input type="text" formControlName="appnum" id="appnum" class="form-control">
             <!-- validation msg for id -->
-            <div *ngIf="appnum.invalid && (appnum.dirty || appnum.touched || ref.submitted)" class="text-danger">
+            <div *ngIf="appnum?.invalid && (appnum?.dirty || appnum?.touched || ref.submitted)" class="text-danger">
                 <p *ngIf="appnum?.errors?.['required']">Application number is required</p>
             </div>
         </div>

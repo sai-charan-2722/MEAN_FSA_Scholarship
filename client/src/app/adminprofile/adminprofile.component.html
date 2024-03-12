@@ -17,7 +17,7 @@
                         <p class="card-text">Annual Income : {{app.annualincome}}</p>
                         <div *ngIf="app.status==='Pending'" class="d-flex flex-row mx-auto">
                             <button class="btn btn-outline-success mx-3" (click)="onApprove(app._id,app)">Approve</button>
-                            <button class="btn btn-outline-danger mx-3" (click)="onReject(app._id)">Reject</button>
+                            <button class="btn btn-outline-danger mx-3" (click)="onReject(app._id,app)">Reject</button>
                         </div>
                         <h5 *ngIf="app.status==='Approved'" class="text-success text-center">Application Approved</h5>
                     </div>

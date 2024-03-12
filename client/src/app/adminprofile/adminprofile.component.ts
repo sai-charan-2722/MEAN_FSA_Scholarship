@@ -36,12 +36,16 @@ export class AdminprofileComponent implements OnInit {
 
     }
 
-    onReject(id:string){
+    onReject(id:string,app:any){
+      
+      app.status = "Rejected"
       let index = this.applications.findIndex((app)=>{
-        app._id === id;
+        return app._id === id;
       });
+      console.log(this.applications)
+      console.log(index)
       this.applications.splice(index,1);
-      this.applicationService.deleteApplication(id).subscribe({
+      this.applicationService.updateApplication(id,app).subscribe({
         next:(res)=>{
           console.log(res)
         },
@@ -50,7 +54,4 @@ export class AdminprofileComponent implements OnInit {
         }
       });
     }
-    
-
-    
 }

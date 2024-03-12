@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { Admin } from '../models/admin';
 import { UserService } from '../services/user.service';
 import { AdminService } from '../services/admin.service';
+import { NgToastService } from 'ng-angular-popup';
  
 @Component({
   selector: 'app-register',
@@ -34,6 +35,7 @@ export class RegisterComponent {
   router=inject(Router)
   userService=inject(UserService);
   adminService=inject(AdminService)
+  toast = inject(NgToastService)
   registerForm:FormGroup;
   fb:FormBuilder=inject(FormBuilder);
  
@@ -59,6 +61,12 @@ export class RegisterComponent {
             if(res.message==="User created"){
               console.log(res)
               this.router.navigate(['/login'])
+              this.toast.success({
+                detail:'Registration done',
+                summary:'Registered as user',
+                position:'topRight',
+                duration:5000
+                });
             }
             else{
               this.duplicateUserStatus=true;
@@ -80,6 +88,12 @@ export class RegisterComponent {
             if(res.message==="Admin created"){
               console.log(res)
               this.router.navigate(['/login'])
+              this.toast.success({
+                detail:'Registration done',
+                summary:'Registered as admin',
+                position:'topRight',
+                duration:5000
+                });
             }
             else{
               this.duplicateAdminStatus=true;

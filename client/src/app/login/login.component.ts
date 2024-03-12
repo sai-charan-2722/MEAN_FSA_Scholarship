@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { AdminService } from '../services/admin.service';
-
+import { NgToastService } from 'ng-angular-popup';
  
 @Component({
   selector: 'app-login',
@@ -14,6 +14,7 @@ export class LoginComponent {
   fb: FormBuilder = inject(FormBuilder);
   userService = inject(UserService)
   adminService = inject(AdminService)
+  toast = inject(NgToastService)
   router = inject(Router)
  
   userCredentialsError={
@@ -48,6 +49,12 @@ userCredentials:FormGroup
           this.userService.setCurrentUser(res.user)
           //navigate to user profile
           this.router.navigate([`/userprofile/${res.user.username}`])
+          this.toast.success({
+            detail:'Login done',
+            summary:'LoggedIn as user',
+            position:'topRight',
+            duration:5000
+            })
         }
         else {
           this.userCredentialsError={
@@ -73,6 +80,12 @@ userCredentials:FormGroup
           this.userService.setCurrentUser(res.user)
           //navigate to user profile
           this.router.navigate([`/adminprofile/${res.user.username}`])
+          this.toast.success({
+            detail:'Login done',
+            summary:'LoggedIn as admin',
+            position:'topRight',
+            duration:5000
+            })
         }
         else {
           this.userCredentialsError={
