@@ -6,18 +6,19 @@ import { UserService } from '../services/user.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit{
-  status:boolean;
+export class HeaderComponent implements OnInit {
+  status: boolean;
 
   userService = inject(UserService);
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.userService.getUserLoginStatus().subscribe({
-      next:(loginStatus)=>{
+      next: (loginStatus) => {
         this.status = loginStatus;
       },
-      error:(err)=>{console.log(err)}
-    })
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
-
 }

@@ -10,21 +10,19 @@ export class ApplicationService {
 
   httpClient = inject(HttpClient)
 
-  
-  createApplication(formData:FormData):Observable<any>{
-    return this.httpClient.post('http://localhost:4000/application-api/application',formData)
-   }
-  
-   getAllApplications():Observable<any>{
+  createApplication(formData: FormData): Observable<any> {
+    return this.httpClient.post('http://localhost:4000/application-api/application', formData)
+  }
+
+  getAllApplications(): Observable<any> {
     return this.httpClient.get('http://localhost:4000/application-api/applications')
-   }
-  
-   deleteApplication(id:string):Observable<any>{
+  }
+
+  deleteApplication(id: string): Observable<any> {
     return this.httpClient.delete(`http://localhost:4000/application-api/application/${id}`)
-   }
-  
-   updateApplication(id:string,app:any):Observable<any>{
-    return this.httpClient.put(`http://localhost:4000/application-api/application/${id}`,app)
-   }
-  
+  }
+
+  updateApplication(id: string, app: any): Observable<any> {
+    return this.httpClient.put(`http://localhost:4000/application-api/application/${id}`, app)
+  }
 }

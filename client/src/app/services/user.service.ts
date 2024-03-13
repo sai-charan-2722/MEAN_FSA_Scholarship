@@ -8,65 +8,53 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class UserService {
-  httpClient=inject(HttpClient)
-  // userLoginStatus = signal(false)
-
-  // getUserLoginStatus(){
-  //   return this.userLoginStatus()
-  // }
-
-  // setUserLoginStatus(value:boolean){
-  //   this.userLoginStatus.set(value)
-  // }
+  httpClient = inject(HttpClient)
 
   userLoginStatus = new BehaviorSubject<boolean>(false);
 
-  getUserLoginStatus():Observable<any>{
+  getUserLoginStatus(): Observable<any> {
     return this.userLoginStatus.asObservable();
   }
 
-  setUserLoginStatus(value:boolean){
+  setUserLoginStatus(value: boolean) {
     this.userLoginStatus.next(value);
   }
 
   currentUser = new BehaviorSubject<User>({
-    username:'',
-    password:'',
-    email:'',
-    dob:''
+    username: '',
+    password: '',
+    email: '',
+    dob: ''
   });
 
-  getCurrentUser():Observable<User>{
+  getCurrentUser(): Observable<User> {
     return this.currentUser.asObservable();
   }
 
-  setCurrentUser(user:User){
+  setCurrentUser(user: User) {
     this.currentUser.next(user);
   }
- 
 
- createStudentUser(newUser:User):Observable<any>{
-  return this.httpClient.post('http://localhost:4000/user-api/user',newUser)
- }
- 
- 
- userStudentLogin(usercredobj):Observable<any>{
-  return this.httpClient.post('http://localhost:4000/user-api/login',usercredobj)
- }
+  createStudentUser(newUser: User): Observable<any> {
+    return this.httpClient.post('http://localhost:4000/user-api/user', newUser)
+  }
 
- getUserByUsername(username:string):Observable<any>{
-  return this.httpClient.get(`http://localhost:3000/users?username=${username}`)
- }
+  userStudentLogin(usercredobj): Observable<any> {
+    return this.httpClient.post('http://localhost:4000/user-api/login', usercredobj)
+  }
 
- userLogout(){
-  this.setUserLoginStatus(false);
-  this.setCurrentUser({
-    username:'',
-    password:'',
-    email:'',
-    dob:''
-  });
-  localStorage.removeItem('token')
- }
+  getUserByUsername(username: string): Observable<any> {
+    return this.httpClient.get(`http://localhost:3000/users?username=${username}`)
+  }
 
+  userLogout() {
+    this.setUserLoginStatus(false);
+    this.setCurrentUser({
+      username: '',
+      password: '',
+      email: '',
+      dob: ''
+    });
+    localStorage.removeItem('token')
+  }
 }

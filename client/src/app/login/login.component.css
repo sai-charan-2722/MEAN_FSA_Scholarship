@@ -7,3 +7,8 @@
 .round{
     border-radius: 15px;
 }
+
+.log{
+    font-weight: bolder;
+    font-style: italic;
+}

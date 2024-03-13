@@ -1,26 +1,26 @@
-const mongoose = require('mongoose')
-//create User schema
-const userSchema=new mongoose.Schema({
-    username:{
-        type:String,
-        required:[true,'Username is required, but missed'],
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: [true, 'Username is required, but missed'],
+        minLength: 3,
+        maxLength: 12
     },
-    password:{
-        type:String,
-        required:[true,'Password is required']
+    password: {
+        type: String,
+        required: [true, 'Password is required']
     },
-    email:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: true
     },
-    dob:{
-        type:Date,
-        required:true
+    dob: {
+        type: Date,
+        required: true
     }
-})
+});
 
-//create Model(class) for the userSchema
-const User=mongoose.model('user',userSchema)
+const User = mongoose.model('user', userSchema);
 
-//export User model
-module.exports=User;
+module.exports = User;

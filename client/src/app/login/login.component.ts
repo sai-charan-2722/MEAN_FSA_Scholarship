@@ -1,103 +1,91 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { AdminService } from '../services/admin.service';
 import { NgToastService } from 'ng-angular-popup';
- 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
   fb: FormBuilder = inject(FormBuilder);
-  userService = inject(UserService)
-  adminService = inject(AdminService)
-  toast = inject(NgToastService)
-  router = inject(Router)
- 
-  userCredentialsError={
-    userCredErrStatus:false,
-    userCredErrMsg:""
+  userService = inject(UserService);
+  adminService = inject(AdminService);
+  toast = inject(NgToastService);
+  router = inject(Router);
+
+  userCredentialsError = {
+    userCredErrStatus: false,
+    userCredErrMsg: ""
   }
-userCredentials:FormGroup
-  ngOnInit(){
+
+  userCredentials: FormGroup;
+
+  ngOnInit() {
     this.userCredentials = this.fb.group({
-      loginType:'user',
-      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
+      loginType: 'user',
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(12)]],
       password: ['', Validators.required]
     })
   }
- 
- 
+
   onSubmitUser() {
-   
-    console.log(this.userCredentials.value);
-   
-   const formData=this.userCredentials.value;
- 
-   if(formData.loginType==='user'){
-    this.userService.userStudentLogin(this.userCredentials.value).subscribe(
-      (res) => {
-        console.log("user login",res)
-        if (res.message === 'login success') {
-          //store token in local/session storage
-          localStorage.setItem('token', res.token)
-          //set user status and current user to service
-          this.userService.setUserLoginStatus(true)
-          this.userService.setCurrentUser(res.user)
-          //navigate to user profile
-          this.router.navigate([`/userprofile/${res.user.username}`])
-          this.toast.success({
-            detail:'Login done',
-            summary:'LoggedIn as user',
-            position:'topRight',
-            duration:5000
-            })
-        }
-        else {
-          this.userCredentialsError={
-            userCredErrStatus:true,
-            userCredErrMsg:res.message
+    const formData = this.userCredentials.value;
+    if (formData.loginType === 'user') {
+      this.userService.userStudentLogin(formData).subscribe({
+        next: (res) => {
+          if (res.message === 'login success') {
+            localStorage.setItem('token', res.token);
+            this.userService.setUserLoginStatus(true);
+            this.userService.setCurrentUser(res.user);
+            this.router.navigate([`/userprofile/${res.user.username}`]);
+            this.toast.success({
+              detail: 'Login Successful',
+              summary: 'LoggedIn as USER',
+              position: 'topRight',
+              duration: 5000
+            });
           }
-        }
-      }, (error) => {
-        console.log('err in user login', error.message)
-      }
-    )
-   }
- 
-   else{
-    this.adminService.userAdminLogin(this.userCredentials.value).subscribe(
-      (res) => {
-        console.log("admin login",res)
-        if (res.message === 'login success') {
-          //store token in local/session storage
-          localStorage.setItem('token', res.token)
-          //set user status and current seller to service
-          this.userService.setUserLoginStatus(true)
-          this.userService.setCurrentUser(res.user)
-          //navigate to user profile
-          this.router.navigate([`/adminprofile/${res.user.username}`])
-          this.toast.success({
-            detail:'Login done',
-            summary:'LoggedIn as admin',
-            position:'topRight',
-            duration:5000
-            })
-        }
-        else {
-          this.userCredentialsError={
-            userCredErrStatus:true,
-            userCredErrMsg:res.message
+          else {
+            this.userCredentialsError = {
+              userCredErrStatus: true,
+              userCredErrMsg: res.message
+            }
           }
+        }, error: (error) => {
+          console.log('err in user login', error);
         }
-      }, (error) => {
-        console.log('err in admin login', error)
-      }
-    )
-   }
-   
+      });
+    }
+    else {
+      this.adminService.userAdminLogin(formData).subscribe({
+        next: (res) => {
+          if (res.message === 'login success') {
+            localStorage.setItem('token', res.token);
+            this.userService.setUserLoginStatus(true);
+            this.userService.setCurrentUser(res.user);
+            this.router.navigate([`/adminprofile/${res.user.username}`]);
+            this.toast.success({
+              detail: 'Login Successful',
+              summary: 'LoggedIn as ADMIN',
+              position: 'topRight',
+              duration: 5000
+            });
+          }
+          else {
+            this.userCredentialsError = {
+              userCredErrStatus: true,
+              userCredErrMsg: res.message
+            }
+          }
+        }, error: (error) => {
+          console.log('err in admin login', error);
+        }
+      });
+    }
   }
 }

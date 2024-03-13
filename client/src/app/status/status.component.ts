@@ -9,13 +9,13 @@ import { UserService } from '../services/user.service';
   templateUrl: './status.component.html',
   styleUrl: './status.component.css'
 })
-export class StatusComponent implements OnInit{
+export class StatusComponent implements OnInit {
 
   fb = inject(FormBuilder)
   router = inject(Router)
   applicationService = inject(ApplicationService)
   userService = inject(UserService);
-  username:string = '';
+  username: string = '';
 
   status = this.fb.group({
     appnum: ['', Validators.required]
@@ -25,64 +25,47 @@ export class StatusComponent implements OnInit{
     return this.status.get('appnum');
   }
 
-  
-
   ngOnInit(): void {
     this.userService.getCurrentUser().subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.username = res.username;
       },
-      error:(err)=>{
+      error: (err) => {
         console.log(err);
       }
-    })
+    });
   }
 
-  navigateBack(){
-    this.router.navigate([`/userprofile/${this.username}`])
+  navigateBack() {
+    this.router.navigate([`/userprofile/${this.username}`]);
   }
-
 
   appStatus: string;
   onSearch() {
     this.applicationService.getAllApplications().subscribe({
-      next:(res) => {
-      let appList = res.payload;  
-      if(appList.length===0){
-        this.appStatus = "Enter valid Application number"
-      }
-      let application = appList.find((app)=>{
-        return app._id === this.status.value.appnum
-      })
-
-      if(application === undefined){
-        this.appStatus = "Enter valid Application number"
-      }else{
-        if (application.status === "Approved") {
-          this.appStatus = "Your application is APPROVED"
-        } else if (application.status === "Pending") {
-          this.appStatus = "Your application is PENDING"
-        }else if (application.status === "Rejected"){
-          this.appStatus = "Your application is REJECTED"
+      next: (res) => {
+        let appList = res.payload;
+        if (appList.length === 0) {
+          this.appStatus = "Enter valid Application number";
         }
+        let application = appList.find((app) => {
+          return app._id === this.status.value.appnum;
+        });
+
+        if (application === undefined) {
+          this.appStatus = "Enter valid Application number";
+        } else {
+          if (application.status === "Approved") {
+            this.appStatus = "Your application is APPROVED";
+          } else if (application.status === "Pending") {
+            this.appStatus = "Your application is PENDING";
+          } else if (application.status === "Rejected") {
+            this.appStatus = "Your application is REJECTED";
+          }
+        }
+      }, error: (err) => {
+        console.log(err)
       }
-
-      // appList.forEach((app) => {
-      //   if (app._id == this.status.value.appnum) {
-      //     if (app.status === "Approved") {
-      //       this.appStatus = "Your application is APPROVED"
-      //     } else if (app.status === "Pending") {
-      //       this.appStatus = "Your application is PENDING"
-      //     }else if (app.status === "Rejected"){
-      //       this.appStatus = "Your application is REJECTED"
-      //     }
-      //   }
-      // });
-      console.log(this.appStatus)
-    }, error:(err) => { console.log(err) }})
+    });
   }
-
-
-
-
 }
