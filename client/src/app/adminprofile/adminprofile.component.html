@@ -20,6 +20,7 @@
                             <button class="btn btn-outline-danger mx-3" (click)="onReject(app._id,app)">Reject</button>
                         </div>
                         <h5 *ngIf="app.status==='Approved'" class="text-success text-center">Application Approved</h5>
+                        <h5 *ngIf="app.status==='Rejected'" class="text-danger text-center">Application Rejected</h5>
                     </div>
                 </div>
             </div>
