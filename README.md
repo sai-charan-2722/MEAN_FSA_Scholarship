@@ -23,17 +23,22 @@ To run this project locally, follow these steps:
    git clone https://github.com/sai-charan-2722/MEAN_FSA_Scholarship.git
    cd MEAN_FSA_Scholarship
 2. Install server dependencies:
+   ```bash
    cd server
    npm install
 3. Install client dependencies:
+   ```bash
    cd ../client
    npm install
 4. Start MongoDB server:
+   ```bash
    mongod
 5. Run the server:
+   ```bash
    cd ../server
    node server
 6. Run the client:
+   ```bash
    cd ../client
    ng serve
 7. Open your browser and navigate to http://localhost:4000
